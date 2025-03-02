@@ -50,12 +50,10 @@ app->start;
 sub query_maillog ($address) {
     my $results = $dbh->selectall_arrayref(
         "SELECT created, str FROM log WHERE address = ?
-         UNION ALL
-         SELECT created, str FROM message WHERE str LIKE CONCAT(int_id, ' <= ', ?, ' %')
          ORDER BY 1 ASC, 2
          LIMIT 101",
         { Slice => {} },
-        ( lc $address ) x 2,
+        lc $address,
     );
 
     return $results;

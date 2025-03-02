@@ -66,12 +66,11 @@ while ( my $line = <> ) {
             0, $message_batch_size )
           if @message_records >= $message_batch_size;
     }
-    else {
-        push @log_records, ( $created, $int_id, $str, $address );
 
-        insert_log_records( splice @log_records, 0, $log_batch_size )
-          if @log_records >= $log_batch_size;
-    }
+    push @log_records, ( $created, $int_id, $str, $address );
+
+    insert_log_records( splice @log_records, 0, $log_batch_size )
+      if @log_records >= $log_batch_size;
 }
 
 insert_message_records(@message_records)
